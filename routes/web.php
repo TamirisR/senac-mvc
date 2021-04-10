@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,14 @@ Route::get('/avisos', function () {
 });
 Route::get('/principal', function (){
     return view ('principal', ['msg' =>'Oiii', 'aviso'=>true, 'mostrar1' => 'Olha o Cachorro', 'mostrar2'=>'Olha o Gatinho']);
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'clientes'], function () {
+
+    Route::get('/listar', [ClientesController::class, 'listar'])->middleware('auth');
+    Route::get('/exercicio', [App\Http\Controllers\ClientesController::class, 'exercicio'])->middleware('auth');
 });
